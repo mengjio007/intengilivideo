@@ -13,18 +13,18 @@ type Comment struct {
 	CreatedAt int64  `json:"created_at"`
 }
 
-// BuildVideo 序列化视频
+//  序列化评论
 func BuildComment(item model.Comment) Comment {
 	return Comment{
-		ID:        item.ID,
+		ID:          item.ID,
 		VideoID:     item.VideoID,
 		UserID:      item.UserID,
 		Content:     item.Content,
-		CreatedAt:     	 item.CreatedAt.Unix(),
+		CreatedAt:   item.CreatedAt.Unix(),
 	}
 }
 
-// BuildVideos 序列化视频列表
+//  序列化评论列表
 func BuildComments(items []model.Comment) (Comments []Comment) {
 	for _, item := range items {
 		comment := BuildComment(item)

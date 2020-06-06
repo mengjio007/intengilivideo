@@ -12,6 +12,7 @@ type Video struct {
 	Title string	`json:"title"`
 	Info string `json:"info"`
 	Tag string `json:"tag" `
+	Root string `json:"root"`
 	Path string		`json:"path"`
 	Avatar string	`json:"avatar"`
 	Comment []Comment	`json:"comment"`
@@ -38,7 +39,7 @@ func (v *Video) AfterFind() {
 // AvatarURL 封面地址
 func (video *Video) AvatarURL() string {
 	client, _ := oss.New("oss-cn-hongkong.aliyuncs.com", "LTAI4FxAEupvUBzdNhZucg1G", "wbtQOguOztGK5iS4QvM7JvkB1JPbCX")
-	bucket, _ := client.Bucket("gilivideo/avatar/*")
+	bucket, _ := client.Bucket("gilivideo")
 	signedGetURL, _ := bucket.SignURL(video.Avatar, oss.HTTPGet, 600)
 	return signedGetURL
 }
@@ -46,7 +47,7 @@ func (video *Video) AvatarURL() string {
 // VideoURL 视频地址
 func (video *Video) VideoURL() string {
 	client, _ := oss.New("oss-cn-hongkong.aliyuncs.com", "LTAI4FxAEupvUBzdNhZucg1G", "wbtQOguOztGK5iS4QvM7JvkB1JPbCX")
-	bucket, _ := client.Bucket("gilivideo/video/*")
+	bucket, _ := client.Bucket("gilivideo")
 	signedGetURL, _ := bucket.SignURL(video.Path, oss.HTTPGet, 600)
 	return signedGetURL
 }
@@ -57,12 +58,28 @@ func (video *Video) View() uint64 {
 	count, _ := strconv.ParseUint(countStr, 10, 64)
 	return count
 }
-
+func HotVideo()[]string{
+	zrange,_:= cache.RedisClient.ZRevRange(cache.DailyRankKey,0,7).Result()
+	return zrange
+}
 
 // AddView 视频游览
 func (video *Video) AddView() {
 	// 增加视频点击数
 	cache.RedisClient.Incr(cache.VideoViewKey(video.ID))
 	// 增加排行点击数
-	cache.RedisClient.ZIncrBy(cache.DailyRankKey, 1, strconv.Itoa(int(video.ID)))
+	cache.RedisClient.ZIncrBy(cache.DailyRankKey,1, strconv.Itoa(int(video.ID)))
+}
+
+//视频点赞
+func (video *Video)Star() uint64{
+	countStr, _ := cache.RedisClient.Get(cache.VideoStar(video.ID)).Result()
+	count, _ := strconv.ParseUint(countStr, 10, 64)
+	return count
+}
+
+func(video *Video)Lstar()uint64{
+	countStr, _ := cache.RedisClient.Get(cache.VideoLStar(video.ID)).Result()
+	count, _ := strconv.ParseUint(countStr, 10, 64)
+	return count
 }

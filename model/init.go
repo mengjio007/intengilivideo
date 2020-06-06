@@ -12,7 +12,7 @@ var DB *gorm.DB
 
 //数据库初始化
 func Database(){
-	db,err := gorm.Open("mysql","xuma:xumaxuma@(101.200.74.64:3306)/xuma?charset=utf8&parseTime=True&loc=Local")
+	db,err := gorm.Open("mysql","root:abc123@(47.107.224.190:3306)/glivideo?charset=utf8&parseTime=True&loc=Local")
 	if err != nil{
 		fmt.Println(err)
 		panic("DB error")
@@ -31,7 +31,7 @@ func Database(){
 }
 
 func migration(){
-	DB.AutoMigrate(&Video{},&User{})
+	DB.AutoMigrate(&Video{},&User{},&Comment{},&Admin{})
 }
 
 func init(){

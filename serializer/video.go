@@ -7,9 +7,14 @@ type Video struct {
 	ID        uint   `json:"id"`
 	Title     string `json:"title"`
 	Info      string `json:"Info"`
-	URL       string `json:"url"`
+	Uid       uint   `json:"uid"`
+	Tag       string  `json:"tag"`
+	Root      string  `json:"root"`
+	Url       string `json:"url"`
 	Avatar    string `json:"avatar"`
 	View      uint64 `json:"view"`
+	Star      uint64 `json:"star"`
+	Lstar     uint64 `json:"lstar"`
 	CreatedAt int64  `json:"created_at"`
 }
 
@@ -19,10 +24,15 @@ func BuildVideo(item model.Video) Video {
 		ID:        item.ID,
 		Title:     item.Title,
 		Info:      item.Info,
-		//URL:       item.VideoURL(),
-		//Avatar:    item.AvatarURL(),
-		//View:      item.View(),
-		//CreatedAt: item.CreatedAt.Unix(),
+		Uid:       item.UserID,
+		Tag:       item.Tag,
+		Root:      item.Root,
+		Url:       item.VideoURL(),
+		Avatar:    item.AvatarURL(),
+		View:      item.View(),
+		Star:      item.Star(),
+		Lstar:      item.Lstar(),
+		CreatedAt: item.CreatedAt.Unix(),
 	}
 }
 

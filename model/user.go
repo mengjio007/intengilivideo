@@ -1,6 +1,7 @@
 package model
 
 import (
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -37,7 +38,7 @@ func GetUser(ID interface{}) (User, error) {
 	return user, result.Error
 }
 
-// SetPassword 设置密码
+// SetPassword 加密密码
 func (user *User) SetPassword(password string) error {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), PassWordCost)
 	if err != nil {
@@ -53,4 +54,10 @@ func (user *User) CheckPassword(password string) bool {
 	return err == nil
 }
 
+func (user *User) AvatarUrl() string{
+	client, _ := oss.New("oss-cn-hongkong.aliyuncs.com", "LTAI4FxAEupvUBzdNhZucg1G", "wbtQOguOztGK5iS4QvM7JvkB1JPbCX")
+	bucket, _ := client.Bucket("gilivideo")
+	signedGetURL, _ := bucket.SignURL(user.Avatar, oss.HTTPGet, 600)
+	return signedGetURL
+}
 

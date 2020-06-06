@@ -17,9 +17,12 @@ type DataList struct {
 // BuildListResponse 列表构建器
 func BuildListResponse(items interface{}, total uint) Response {
 	return Response{
+		Status:200,
 		Data: DataList{
 			Items: items,
 			Total: total,
 		},
 	}
 }
+
+

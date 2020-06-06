@@ -40,3 +40,35 @@ func AuthRequired() gin.HandlerFunc {
 		c.Abort()
 	}
 }
+
+// AdminCurrentUser 获取登录管理员
+func AdminCurrentUser() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		session := sessions.Default(c)
+		Adminid := session.Get("admin_id")
+		if Adminid != nil {
+			admin, err := model.GetUser(Adminid)
+			if err == nil {
+				c.Set("admin", &admin)
+			}
+		}
+		c.Next()
+	}
+}
+// AdminAuthRequired 需要登录
+func AdminAuthRequired() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if admin, _ := c.Get("admin"); admin != nil {
+			if _, ok := admin.(*model.Admin); ok {
+				c.Next()
+				return
+			}
+		}
+
+		c.JSON(200, serializer.Response{
+			Status: 401,
+			Msg:    "需要登录",
+		})
+		c.Abort()
+	}
+}

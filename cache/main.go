@@ -34,8 +34,12 @@ const (
 func VideoViewKey(id uint) string {
 	return fmt.Sprintf("view:video:%s", strconv.Itoa(int(id)))
 }
-
-
+func VideoStar(id uint)string{
+	return fmt.Sprintf("star:video:%s",strconv.Itoa(int(id)))
+}
+func VideoLStar(id uint)string{
+	return fmt.Sprintf("lstar:video:%s",strconv.Itoa(int(id)))
+}
 func init(){
 	Redis()
 }
