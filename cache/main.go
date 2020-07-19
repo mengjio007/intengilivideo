@@ -13,7 +13,7 @@ var RedisClient *redis.Client
 // Redis 在中间件中初始化redis链接
 func Redis() {
 	client := redis.NewClient(&redis.Options{
-		Addr:  "47.107.224.190:6379",
+		Addr:  "",
 		Password: "",
 		DB:    1,
 	})

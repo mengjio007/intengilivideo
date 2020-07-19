@@ -15,7 +15,7 @@ type UploadUserTokenService struct {
 
 // Post 创建token
 func (service *UploadUserTokenService) Post() serializer.Response {
-	client, err := oss.New("oss-cn-hongkong.aliyuncs.com", "LTAI4FxAEupvUBzdNhZucg1G", "wbtQOguOztGK5iS4QvM7JvkB1JPbCX")
+	client, err := oss.New("oss-cn-hongkong.aliyuncs.com", "", "")
 	if err != nil {
 		return serializer.Response{
 			Status: 50002,

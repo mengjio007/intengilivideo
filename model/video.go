@@ -38,7 +38,7 @@ func (v *Video) AfterFind() {
 
 // AvatarURL 封面地址
 func (video *Video) AvatarURL() string {
-	client, _ := oss.New("oss-cn-hongkong.aliyuncs.com", "LTAI4FxAEupvUBzdNhZucg1G", "wbtQOguOztGK5iS4QvM7JvkB1JPbCX")
+	client, _ := oss.New("oss-cn-hongkong.aliyuncs.com", "LTAI4G7M8jNGtLte49EQK6ak", "Kv0dzyu26SHt1uiHoyx0xDkcZY5Hec")
 	bucket, _ := client.Bucket("gilivideo")
 	signedGetURL, _ := bucket.SignURL(video.Avatar, oss.HTTPGet, 600)
 	return signedGetURL
@@ -46,7 +46,7 @@ func (video *Video) AvatarURL() string {
 
 // VideoURL 视频地址
 func (video *Video) VideoURL() string {
-	client, _ := oss.New("oss-cn-hongkong.aliyuncs.com", "LTAI4FxAEupvUBzdNhZucg1G", "wbtQOguOztGK5iS4QvM7JvkB1JPbCX")
+	client, _ := oss.New("oss-cn-hongkong.aliyuncs.com", "LTAI4G7M8jNGtLte49EQK6ak", "Kv0dzyu26SHt1uiHoyx0xDkcZY5Hec")
 	bucket, _ := client.Bucket("gilivideo")
 	signedGetURL, _ := bucket.SignURL(video.Path, oss.HTTPGet, 600)
 	return signedGetURL

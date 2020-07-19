@@ -12,7 +12,7 @@ var DB *gorm.DB
 
 //数据库初始化
 func Database(){
-	db,err := gorm.Open("mysql","root:abc123@(47.107.224.190:3306)/glivideo?charset=utf8&parseTime=True&loc=Local")
+	db,err := gorm.Open("mysql","")
 	if err != nil{
 		fmt.Println(err)
 		panic("DB error")
